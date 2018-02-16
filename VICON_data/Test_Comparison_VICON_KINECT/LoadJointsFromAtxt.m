@@ -13,21 +13,22 @@ Z=M(:,3:7:end);
 oX=M(:,4:7:end);
 oY=M(:,5:7:end);
 oZ=M(:,6:7:end);
-ow=M(:,7:7:end);
+oW=M(:,7:7:end);
 
 %% plot skeleton
  % substract joint 
 X=bsxfun(@minus,X,X(:,1));
 Y=bsxfun(@minus,Y,Y(:,1));
 Z=bsxfun(@minus,Z,Z(:,1));
-
+Joints = struct;
+Orientations = struct;
 Joints.X=X;
 Joints.Y=Y;
 Joints.Z=Z;
-Orientations.W=ow;
-Orientations.X=ox;
-Orientations.Y=oy;
-Orientations.Z=oz;
+Orientations.W=oW;
+Orientations.X=oX;
+Orientations.Y=oY;
+Orientations.Z=oZ;
 
 end
 
