@@ -14,11 +14,15 @@ for i=1:N
     res_Q = zeros(1,4);
 
     [res_Q(1), res_Q(2), res_Q(3), res_Q(4)] = QuatornianMultiplication(q_angle(1),q_angle(2),q_angle(3),q_angle(4), ...
-    q_angle(5), q_angle(6), q_angle(7), q_angle(8));   
-    [PRW(1,i), PRW(2,i), PRW(3,i)] = quat2angle(res_Q);
+    q_angle(5), q_angle(6), q_angle(7), q_angle(8));
+ %    [res_Q] = quatmultiply([ow(i,index1) oX(i,index1) oY(i,index1) oZ(i,index1)], [ow(i,index2) oX(i,index2) oY(i,index2) oZ(i,index2)])
+%    [PRW(1,i), PRW(2,i), PRW(3,i)] = quat2angle(res_Q, 'XYZ');
+  [PRW(1,i), PRW2(2,i), PRW2(3,i)]= quaternion_to_euler_angle( res_Q(1), res_Q(2), res_Q(3), res_Q(4));
+    
 end
 
-PRW=PRW.*57.2958;
+%PRW=PRW.*57.2958;
+%PRW=PRW2;
 % The left hip was then 
 % reoriented by rotating 270° about the x-axis, 270° about the z-axis, and then rotating about the
 % y-axis by the previously calculated hip to “hip_center” angle. 
@@ -32,7 +36,17 @@ PRW=PRW.*57.2958;
 
 
 % for left foot
-PRW = PRW.* 57.2958;
+
 
 end
 
+
+% %for i=1:N
+%     q2= [ow(i,index2) oX(i,index2) oY(i,index2) oZ(i,index2)];
+%     q_angle = [ow(i,index1) oX(i,index1) oY(i,index1) oZ(i,index1) quatinv(q2)];
+%     res_Q = zeros(1,4);
+% 
+%     [res_Q(1), res_Q(2), res_Q(3), res_Q(4)] = QuatornianMultiplication(q_angle(1),q_angle(2),q_angle(3),q_angle(4), ...
+%     q_angle(5), q_angle(6), q_angle(7), q_angle(8));   
+%     [PRW(1,i), PRW(2,i), PRW(3,i)] = quat2angle(res_Q);
+% end

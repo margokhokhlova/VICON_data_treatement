@@ -10,6 +10,7 @@ X=M(:,1:7:end);
 Y=M(:,2:7:end);
 Z=M(:,3:7:end);
 
+
 oX=M(:,4:7:end);
 oY=M(:,5:7:end);
 oZ=M(:,6:7:end);
@@ -20,6 +21,12 @@ oW=M(:,7:7:end);
 X=bsxfun(@minus,X,X(:,1));
 Y=bsxfun(@minus,Y,Y(:,1));
 Z=bsxfun(@minus,Z,Z(:,1));
+
+
+% filter
+X = sgolayfilt(X,3,15);
+Y = sgolayfilt(Y,3,15);
+Z  = sgolayfilt(Z,3,15);
 Joints = struct;
 Orientations = struct;
 Joints.X=X;
