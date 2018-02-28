@@ -2,6 +2,7 @@ function [ m_X, m_Y, m_Z] = NormalizeMarkers( markers )
 %UNTITLED6 Summary of this function goes here
 %   Select only the joints we are going to use later.
 % normalize them towards the base spine joint
+
 X = [];
 Y = [];
 Z = [];
@@ -30,6 +31,12 @@ Z=[spine_base(:,3), spine_mid(:,3), NaN(T,1), head(:,3),markers.LSHO(:,3), marke
 m_X=bsxfun(@minus,X,X(:,1));
 m_Y=bsxfun(@minus,Y,Y(:,1));
 m_Z=bsxfun(@minus,Z,Z(:,1));
+
+
+m_X=m_X./1000;
+m_Y=m_Y./1000;
+m_Z=m_Z./1000;
+
 
 
 
