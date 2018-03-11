@@ -14,12 +14,12 @@ angles = btkGetAngles(acq);
 %[t, Joints, Orientations ] = LoadJointsFromAtxt('G:\GitHub\time_alignment\JointsInfo_l_take1.txt' )
 
 %[tR, JointsR, OrientationsR ] = LoadJointsFromAtxt('G:\GitHub\time_alignment\JointsInfo_r_take1.txt' )
-JointsL= load('G:\GitHub\time_alignment\LeftXYZ.mat');
-JointsR= load('G:\GitHub\time_alignment\RightXYZ.mat');
+JointsL= load('LeftXYZ.mat');
+JointsR= load('RightXYZ.mat');
 JointsL=JointsL.JointsL;
 JointsR=JointsR.JointsR;
-OrientationsL=load('G:\GitHub\time_alignment\OrientaionsL.mat');
-OrientationsR=load('G:\GitHub\time_alignment\OrientaionsR.mat');
+OrientationsL=load('OrientaionsL.mat');
+OrientationsR=load('OrientaionsR.mat');
 OrientationsL=OrientationsL.OrientationsL;
 OrientationsR=OrientationsR.OrientationsR;
 
