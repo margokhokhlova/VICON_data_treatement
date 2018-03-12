@@ -17,9 +17,15 @@ for j=1:N
     ThetaInDegrees(2,j) = atan2d(norm(cross(u,v)),dot(u,v))/57.2958;
     ThetaInDegrees(3,j)=270/57.2958;
 end
+%% visualization
+for j=1:N
+     VisualizeDCM(Joints, Orientations, j)
+end
+
 %% rotate left hip by 270 x axis, 270 - z axis and theta - y axis
 %% rotate right hip by 270 x axis, 90 about z axis, theta - y axis
 % Z X Y cardan angles from quaternons 
+
 
 for j=1:N
 [quaternion_rotation_hip(1:4)]  = angle2quat(ThetaInDegreesRight(1,j),ThetaInDegreesRight(2,j),ThetaInDegreesRight(3,j),'ZXY');

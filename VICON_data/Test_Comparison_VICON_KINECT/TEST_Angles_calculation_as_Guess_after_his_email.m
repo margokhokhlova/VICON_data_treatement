@@ -89,6 +89,10 @@ end
 % Z X Y cardan angles from quaternons 
 
 for j=1:N
+
+VisualizeDCM(JointsL, OrientationsL, j);
+pause();
+
 [quaternion_rotation_hip(1:4)]  = angle2quat(ThetaInDegreesRight(1,j),ThetaInDegreesRight(2,j),ThetaInDegreesRight(3,j),'ZXY');
 q_h=[OrientationsL.W(j,13) OrientationsL.X(j,13) OrientationsL.Y(j,13) OrientationsL.Z(j,13)];
 q_h_rot= quatmultiply(quatinv(quaternion_rotation_hip),q_h);
