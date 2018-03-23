@@ -5,6 +5,8 @@ clear all
 %% Load and display VICON data
 
 acq = btkReadAcquisition('E:\Data_from_CHU\VICON\marche01.c3d');
+acq = btkReadAcquisition('E:\datasets\mocap_walk\walk\normal\walk-01-normal-aita.c3d')
+
 markers = btkGetMarkers(acq);
 angles = btkGetAngles(acq);
 [V_x, V_y, V_z]  = NormalizeMarkers(markers);
@@ -88,9 +90,13 @@ end
 %% rotate right hip by 270 x axis, 90 about z axis, theta - y axis
 % Z X Y cardan angles from quaternons 
 
+
+%OrientationsL_changed = reOrientHip(OrientationsL, JointsL);
 for j=1:N
 
 VisualizeDCM(JointsL, OrientationsL, j);
+pause();
+VisualizeDCM(JointsL, OrientationsL_changed, j);
 pause();
 
 [quaternion_rotation_hip(1:4)]  = angle2quat(ThetaInDegreesRight(1,j),ThetaInDegreesRight(2,j),ThetaInDegreesRight(3,j),'ZXY');

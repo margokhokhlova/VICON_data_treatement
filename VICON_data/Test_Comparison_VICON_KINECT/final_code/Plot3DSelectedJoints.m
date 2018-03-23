@@ -3,7 +3,9 @@ function [] = Plot3DSelectedJoints( X,Y,Z )
 %   Detailed explanation goes here
 % in total 21, so
 figure
+
 scatter3(X, Y, Z, 'or' );
+view(175,-57)
 hold on
 line(X([2 21]), Y([2 21]), Z([2 21]));
 line(X([1 2]), Y([1 2]), Z([1 2]));
