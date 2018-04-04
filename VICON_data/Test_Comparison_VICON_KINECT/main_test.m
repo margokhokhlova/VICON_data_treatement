@@ -7,31 +7,44 @@ markers = btkGetMarkers(acq);
 angles = btkGetAngles(acq);
 
 % data from VICON, taken the right joints and substract  the base joint
-[V_x, V_y, V_z]  = NormalizeMarkers(markers);
+[X, Y, Z]  = NormalizeMarkers(markers);
 % get data from both Kinects
-[t, Joints, Orientations ] = LoadJointsFromAtxt('G:\GitHub\time_alignment\JointsInfo_l_take1.txt' )
-
+%[t, Joints, Orientations ] = LoadJointsFromAtxt('G:\GitHub\time_alignment\JointsInfo_l_take1.txt' )
+XYZ = struct;
+XYZ.X=X;
+XYZ.Y=Y;
+XYZ.Z=Z;
 % calculate joint angles from coordinates
-for j=1:300
-      a=([Joints.X(j,14),Joints.Y(j,14),Joints.Z(j,14)]-[Joints.X(j,13),Joints.Y(j,13),Joints.Z(j,13)]);
-      b=([Joints.X(j,14),Joints.Y(j,14),Joints.Z(j,14)]-[Joints.X(j,15),Joints.Y(j,15),Joints.Z(j,15)]);
-      angle_lkne(j)=atan2d(norm(cross(a,b)),dot(a,b));
-      c=([Joints.X(j,18),Joints.Y(j,18),Joints.Z(j,18)]-[Joints.X(j,17),Joints.Y(j,17),Joints.Z(j,17)]);
-      d=([Joints.X(j,18),Joints.Y(j,18),Joints.Z(j,18)]-[Joints.X(j,19),Joints.Y(j,19),Joints.Z(j,19)]);
-      angle_rkne(j)=atan2d(norm(cross(c,d)),dot(c,d));
-      
-      a = ([V_x(j,14), V_y(j,14), V_z(j,14)]-[V_x(j,13), V_y(j,13), V_z(j,13)]);
-      b =([V_x(j,14), V_y(j,14), V_z(j,14)]-[V_x(j,15), V_y(j,15), V_z(j,15)]);
-      angle_lkne_V(j)=atan2d(norm(cross(a,b)),dot(a,b));
+[angle_lkne_V,angle_rkne_V,angle_lhip_V, angle_rhip_V]=CalculateAnglesfromJoints( XYZ);
 
-end
+%% DISPLAY REFERENCE
 figure
-subplot(2,1,1)
-plot(angle_lkne)
-subplot(2,1,2)
-plot( angle_lkne_V);     
-      
-      
+subplot(2,2,1);
+plot(angles.LKneeAngles); title('Left Knee Angle');
+hold on
+plot(angle_lkne_V, '--r'); 
+hold off
+subplot(2,2,2)
+plot(angles.RKneeAngles); title('Right Knee Angle');
+hold on
+plot(  angle_rkne_V, '--r');  
+hold off
+subplot(2,2,3);
+plot(angles.LHipAngles); title('Left Hip Angle');
+hold on
+plot(angle_lhip_V, '--r'); 
+hold off
+subplot(2,2,4)
+plot(angles.RHipAngles); title('Right Hip Angle');
+hold on
+plot(angle_rhip_V, '--r');  
+hold off
+legend('Data from Vicon',' recalculated flexion angle')
+
+
+
+%%
+
 ANGLE_kinect =CalculateAnglesFromOrientations(Orientations,14, 15);
 
 ANGLE_kinect_R =CalculateAnglesFromOrientations(Orientations,18, 19);

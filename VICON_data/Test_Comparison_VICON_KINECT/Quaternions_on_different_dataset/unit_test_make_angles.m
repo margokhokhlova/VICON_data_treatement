@@ -6,17 +6,16 @@ num_persons=numel(persons);
 d = load('distances_h_k_a.mat');
 d=d.distance_for_save;
 %%
-%Norm_data=[];
+%m=1;
+%Norm_data=zeros(12*56, 300);
 for ii=1:num_persons
 %for each person
     person=train_data.(persons{ii});
-    for  j=1:size(person,2)
+    for  j=1:size(person,2)-1
         data=person{j};
         XYZ = data{1};
         Orientations = data{2};
         Orientations_New = reOrientHip(Orientations, XYZ);
-        % the part to segment
-        cycles = Segment_sequence(XYZ);
         % filter out Joints and Orientations in order to remove some
         % outliers
         %[Orientations_New, XYZ] = RemoveDataWithErrors( XYZ, Orientations_New, d );
@@ -45,7 +44,7 @@ for ii=1:num_persons
         
         % reshape angles to imput
         strName = sprintf('C://Users//margo_kat//Pictures//some_plots_matrices//flextion//normal%s%d.png ', persons{ii}, j);
-        input=[rkL(1,:); rkR(1,:); rhL(1,:); rhR(1,:)]; %  
+        input=[rkL; rkR; rhL; rhR]; %  
         [N T]=size(input);
         %Xa=1/(T-1)*input*(1/T* eye(T)-ones(T,T))*transpose(input);
         % ovariance is a measure of how much two random variables vary together. It’s similar to variance, but where variance tells you how a single variable varies, co variance tells you how two variables vary together.
@@ -53,13 +52,14 @@ for ii=1:num_persons
         Xa = nancov(input');
         Xa_norm = NormalizeCovarianceMatrix(Xa);
         upper_part_of_matrix = triu(Xa);
-        Norm_data = [Norm_data;  Xa(:)'];
+        Norm_data(m:m+11,1:size(rkL,2)) = [rkL; rkR; rhL; rhR];
         figure
         imagesc(upper_part_of_matrix);suptitle(str);
         %Xa
         %Xa_norm
        % saveas(gcf,strName);
         pause();
+        m=m+12;
     end
 end
 
