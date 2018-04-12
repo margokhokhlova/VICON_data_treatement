@@ -17,7 +17,7 @@ for i=1:O
          point1 = [Joints.X(i,16), Joints.Y(i,16), Joints.Z(i,16)]; % ankle
          point2 =[Joints.X(i,20), Joints.Y(i,20), Joints.Z(i,20)];
     end
-    dist(i) = EuclideanDist(point1, point2);
+    dist(i) = point1(3);
 end
 
 dist=medfilt1(dist, 5);
@@ -28,7 +28,7 @@ y=(1:size(dist,2));
 plot(y, dist, locs,  dist(locs),   'or');
 title('Distance between 2 feet and located peaks');
 axis tight
-pause(0.1);
+%pause();
 %sort out possible values below average
 average = mean(dist);
 locs(pks<average) = [];
@@ -36,6 +36,8 @@ pks(pks<average) = [];
 if (locs>=2)
     cycles = locs;
 end
+
+
 % idea - we can then simply change the positions - to augment the number of
 % dat
 end

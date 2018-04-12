@@ -51,9 +51,9 @@ Z=bsxfun(@minus,Znew,Znew(:,1));
 %   distance between the joints and the centroid C and normalize
 
 XYZ = struct; 
-XYZ.X=X;
-XYZ.Y=Y;
-XYZ.Z=Z;
+XYZ.X=X/100;
+XYZ.Y=Y/100;
+XYZ.Z=Z/100;
 
 %PlotData(XYZ); % Nx3
 end

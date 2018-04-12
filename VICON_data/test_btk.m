@@ -10,3 +10,4 @@ moments = btkGetMoments(acq);
 powers = btkGetPowers(acq);
 
 plot(angles.LKneeAngles);
+

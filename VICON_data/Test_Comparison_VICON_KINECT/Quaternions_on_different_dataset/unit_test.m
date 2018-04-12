@@ -1,3 +1,4 @@
+
 % load data
 train_data = load('testing.mat');
 train_data = train_data.data_save; 
@@ -10,13 +11,13 @@ d=d.distance_for_save;
 for ii=1:num_persons
 %for each person
     person=train_data.(persons{ii});
-    for  j=1:size(person,2)
+    for  j=1:size(person,2)-1
         data=person{j};
         XYZ = data{1};
         Orientations = data{2};
         Orientations_New = reOrientHip(Orientations, XYZ);
         % the part to segment
-        cycles = Segment_sequence(XYZ);
+        %cycles = Segment_sequence(XYZ);
         % filter out Joints and Orientations in order to remove some
         % outliers
         %[Orientations_New, XYZ] = RemoveDataWithErrors( XYZ, Orientations_New, d );
@@ -38,8 +39,8 @@ for ii=1:num_persons
          plot(rhR'); title('Angle Hip Right');
          str = sprintf('Plot of %s %d ', persons{ii}, j);
         suptitle(str)
-        pause();
-
+        pause(0.1);
+        close all
         % features based on the angles data
         %take angles and make correlation matrix
         
@@ -51,15 +52,22 @@ for ii=1:num_persons
         % ovariance is a measure of how much two random variables vary together. It’s similar to variance, but where variance tells you how a single variable varies, co variance tells you how two variables vary together.
         % Cov(X,Y) = ? E((X-?)E(Y-?)) / n-1 
         Xa = nancov(input');
+        imagesc(Xa)
+
         Xa_norm = NormalizeCovarianceMatrix(Xa);
         upper_part_of_matrix = triu(Xa);
-        Norm_data = [Norm_data;  Xa(:)'];
+ 
+         eigenVal = eig(Xa);
         figure
-        imagesc(upper_part_of_matrix);suptitle(str);
+        subplot(1,2,1); imagesc(upper_part_of_matrix);suptitle(str);
+        subplot(1,2,2);imagesc(eigenVal);
+        Norm_data = [Norm_data;  eigenVal'];
+        
         %Xa
         %Xa_norm
        % saveas(gcf,strName);
-        pause();
+       
+        pause(0.1);
     end
 end
 

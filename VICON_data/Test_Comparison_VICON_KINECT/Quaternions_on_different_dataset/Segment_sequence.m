@@ -1,4 +1,4 @@
-function [ cycles ] = Segment_sequence( Joints )
+function [ cycles ] = Segment_sequence_right_foot( Joints )
 %SEGMENT_SEQUENCE Summary of this function goes here
 %   Gait cycle segmentation as it is proposed in paper by Ngoen
 % The extraction process is performed with the support of a parameter that has the same periodicity as the gait cycle.  
@@ -17,23 +17,28 @@ for i=1:O
          point1 = [Joints.X(i,16), Joints.Y(i,16), Joints.Z(i,16)]; % ankle
          point2 =[Joints.X(i,20), Joints.Y(i,20), Joints.Z(i,20)];
     end
-    dist(i) = EuclideanDist(point1, point2);
+    if point1(3)==0
+        dist(i) = NaN;
+    else
+    dist(i) =point1(3);
+    end
+    
 end
 
 dist=medfilt1(dist, 5);
 
 % then sliding window to find mimimums
-[pks,locs] = findpeaks(dist, 'MinPeakDistance',13); % minimum 10 frames per cycle
+[pks,locs] = findpeaks(dist, 'MinPeakDistance',40); % minimum 10 frames per cycle
 y=(1:size(dist,2));
 plot(y, dist, locs,  dist(locs),   'or');
 title('Distance between 2 feet and located peaks');
 axis tight
 pause();
 %sort out possible values below average
-average = mean(dist);
+average = mean(dist)*1.3;
 locs(pks<average) = [];
 pks(pks<average) = [];
-if (locs>=2)
+if (numel(locs)>=2)
     cycles = locs;
 end
 % idea - we can then simply change the positions - to augment the number of

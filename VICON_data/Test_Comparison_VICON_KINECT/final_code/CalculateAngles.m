@@ -23,8 +23,8 @@ q_Lknee = quatmultiply(quatinv(q_aL),q_kL); % v(q_a),q_k);
 q_Rknee = quatmultiply(quatinv(q_aR),q_kR);
 
 
-q_Lhip = quatmultiply(quatinv(q_kL),q_hL);
-q_Rhip = quatmultiply(quatinv(q_kR),q_hR);
+q_Lhip = quatmultiply((q_kL),(q_hL));
+q_Rhip = quatmultiply((q_kR),(q_hR));
 
 
 
@@ -38,12 +38,14 @@ q_Rhip = quatmultiply(quatinv(q_kR),q_hR);
 
 % mulpiple 
 end
-g =[-1;1;-1];
+g =[-1;1;1];
 
 rkL=rkL.*57.2958.*repmat(g, [1 O]);
 rkR=rkR*57.2958;
 rhL=rhL.*57.2958.*repmat(g, [1 O]);
-rhR=rhR*57.2958;
+g =[-1;1;-1];
+
+rhR=rhR*57.2958.*repmat(g, [1 O]);
 
 end
 

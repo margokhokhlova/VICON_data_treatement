@@ -62,7 +62,7 @@ for ii=1:num_persons
             str = sprintf('Plot of %s %d. Cycle %d ', persons{ii}, j,l-1);
             
             suptitle(str);
-  %          pause();
+            pause(0.4);
         end
         hold off;
         
