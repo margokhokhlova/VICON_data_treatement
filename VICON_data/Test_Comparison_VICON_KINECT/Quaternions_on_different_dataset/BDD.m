@@ -27,7 +27,7 @@ function [] = BDD(folder)
          [data_save.(d(i).name)]=save_str;       
         end
     end
-%save('training.mat', 'data_save');
+save('training_scheme2_dai.mat', 'data_save');
 end
 
 %% order

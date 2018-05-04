@@ -28,7 +28,7 @@ end
 dist=medfilt1(dist, 5);
 
 % then sliding window to find mimimums
-[pks,locs] = findpeaks(dist, 'MinPeakDistance',40); % minimum 10 frames per cycle
+[pks,locs] = findpeaks(dist, 'MinPeakDistance',12); % minimum 10 frames per cycle
 y=(1:size(dist,2));
 plot(y, dist, locs,  dist(locs),   'or');
 title('Distance between 2 feet and located peaks');
